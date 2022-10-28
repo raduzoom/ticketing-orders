@@ -3,11 +3,7 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
 declare global {
-  namespace NodeJS {
-    interface Global {
-      signin(): string[];
-    }
-  }
+  var signin: (id?: string) => string[];
 }
 
 jest.mock('../nats-wrapper');
@@ -21,8 +17,6 @@ beforeAll(async () => {
   const mongoUri = await mongo.getUri();
 
   await mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
   });
 });
 
@@ -40,7 +34,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = () => {
+(global).signin = () => {
   // Build a JWT payload.  { id, email }
   const payload = {
     id: new mongoose.Types.ObjectId().toHexString(),

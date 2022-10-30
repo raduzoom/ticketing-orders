@@ -7,30 +7,9 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: www.YOUR_DOMAIN_NAME
+    - host: www.radu-zoom.quest
       http:
         paths:
-          - path: /api/payments/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: payments-srv
-                port:
-                  number: 3000
-          - path: /api/users/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: auth-srv
-                port:
-                  number: 3000
-          - path: /api/tickets/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: tickets-srv
-                port:
-                  number: 3000
           - path: /api/orders/?(.*)
             pathType: Prefix
             backend:
@@ -51,7 +30,7 @@ kind: Service
 metadata:
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
-    service.beta.kubernetes.io/do-loadbalancer-hostname: "www.YOUR_DOMAIN_NAME"
+    service.beta.kubernetes.io/do-loadbalancer-hostname: "www.radu-zoom.quest"
   labels:
     helm.sh/chart: ingress-nginx-2.0.3
     app.kubernetes.io/name: ingress-nginx

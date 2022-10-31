@@ -16,4 +16,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 8080
-CMD [ "node", "node-app-test.js" ]
+CMD [ "node", "node-test-app.js" ]

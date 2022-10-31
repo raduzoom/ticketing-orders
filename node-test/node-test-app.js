@@ -7,7 +7,7 @@ const PORT = 8080;
 const HOST = '0.0.0.0';
 
 
-(JSON).safeStringify = (ob, indent = 2) => {
+(JSON).safeStringify = (obj, indent = 2) => {
   let cache= [];
   const retVal = JSON.stringify(
     obj,
@@ -30,11 +30,11 @@ app.get('/', (req, res) => {
     throw new Error('JWT_KEY must be defined');
   }
 
-  
+
   let finalOutput = '';
 
 
-  finalOutput+='hello '+process.env.JWT_KEY;
+  finalOutput+='hello '+process.env.JWT_KEY+' --- '+process.env.NATS_CLIENT_ID;
   finalOutput+='<br><br>';
   finalOutput+=JSON.safeStringify(req);
   res.send(finalOutput);

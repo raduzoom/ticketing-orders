@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-test-app-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-test-app
+  template:
+    metadata:
+      labels:
+        app: node-test-app
+    spec:
+      containers:
+        - name: node-test-app
+          image: raduzoom/node-test-app
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-test-app-srv
+spec:
+  selector:
+    app: node-test-app
+  ports:
+    - name: node-test-app
+      protocol: TCP
+      port: 80
+      targetPort: 8080

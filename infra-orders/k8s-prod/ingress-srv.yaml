@@ -25,6 +25,23 @@ spec:
                 name: node-test-app-srv
                 port:
                   number: 80
+    - host: www.hbg-petrochemicals.ro
+      http:
+        paths:
+          - path: /api/orders/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: orders-srv
+                port:
+                  number: 3000
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: node-test-app-srv
+                port:
+                  number: 80
 # ---
 # apiVersion: v1
 # kind: Service
